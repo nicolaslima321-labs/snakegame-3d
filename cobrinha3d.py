@@ -8,6 +8,9 @@ from OpenGL.GLU import *
 largura, altura = 500, 500
 widthMapa, heightMapa = 50, 50
 
+global angulo
+
+angulo = 30
 timer = 100
 
 cobrinha = [(25, 25)]
@@ -247,21 +250,23 @@ def desenha():
 
     resetaMapa(largura, altura, widthMapa, heightMapa)
 
+    parametrosVisualizacao()
     #Especifica sistema de coordenadas de projeção
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    #Especifica a projeção perspectiva
-    gluPerspective(45, 1.1, 0.1, 600);
-    #Especifica sistema de coordenadas do modelo
-    glMatrixMode(GL_MODELVIEW);
-    # Inicializa sistema de coordenadas do modelo
-    glLoadIdentity();
-    #Especifica posição do observador e do alvo
-    # gluLookAt(0,80,200, 0,0,0, 0,1,0)
-    # gluLookAt(250, 250, 250, 250, 250, 250, 1, 1, 0)
-    # gluLookAt(0, 500, 400, 0, 0, 0, 0, 1, 0)
-    gluLookAt(0, 300, 500, 0, 150, 100, 0, 1, 0)
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    # if jogoIniciado == False:
+    #   glMatrixMode(GL_PROJECTION);
+    #   glLoadIdentity();
+    #   #Especifica a projeção perspectiva
+    #   gluPerspective(45, 1.1, 0.1, 600);
+    #   #Especifica sistema de coordenadas do modelo
+    #   glMatrixMode(GL_MODELVIEW);
+    #   # Inicializa sistema de coordenadas do modelo
+    #   glLoadIdentity();
+    #   #Especifica posição do observador e do alvo
+    #   # gluLookAt(0,80,200, 0,0,0, 0,1,0)
+    #   # gluLookAt(250, 250, 250, 250, 250, 250, 1, 1, 0)
+    #   # gluLookAt(0, 500, 400, 0, 0, 0, 0, 1, 0)
+    #   gluLookAt(0, 300, 500, 0, 150, 100, 0, 1, 0)
+    #   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
     desenhaVeneno()
     desenhaComidas()
@@ -388,13 +393,46 @@ def iluminacao():
     glEnable(GL_DEPTH_TEST); # Habilita o depth-buffering
     glEnable(GL_NORMALIZE);
 
+def parametrosVisualizacao():
+    global angulo
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    # Especifica a projeção perspectiva
+    gluPerspective(angulo, 1, 0.1, 600);
+    #gluPerspective(angulo, 1, 0.5, 50);
+    #glOrtho(-1.8, 1.8, -1.8, 2, 0.8, 200.0);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    # Especifica posição do observador e do alvo
+    #gluLookAt(2.00 + anguloX, 1.00 + anguloY, 2.0, 0.0, 0.5, 0.25, 0.0, 1.0, 0.0);
+    gluLookAt(0, 300, 500, 0, 150, 100, 0, 1, 0)
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+def gerenciaMouse(button, state, x, y):
+    global angulo
+
+    print("zoom")
+    print(angulo)
+
+    if (button == GLUT_LEFT_BUTTON):
+        if (state == GLUT_DOWN):
+            if (angulo < 170):
+                angulo += 5
+            else:
+                angulo = 5
+    #printf("%f\n",angulo);
+    parametrosVisualizacao();
+    glutPostRedisplay();
+
 def main():
     print("Jogo da Cobrinha")
     glutInit(sys.argv)
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH)
     glutInitWindowSize(largura, altura)
-    glutInitWindowPosition(500, 300)
+    glutInitWindowPosition(600, 400)
     glutCreateWindow(b"Jogo da Cobrinha 2D")
+    glutMouseFunc(gerenciaMouse)
     glutDisplayFunc(desenha)
     glutIdleFunc(desenha)
     glutKeyboardFunc(tecladoMovimentos)
