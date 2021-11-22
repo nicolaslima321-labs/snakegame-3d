@@ -8,7 +8,8 @@ from OpenGL.GLU import *
 largura, altura = 500, 500
 widthMapa, heightMapa = 50, 50
 
-global angulo
+anguloX = 0
+anguloY = 0
 
 angulo = 30
 timer = 100
@@ -36,9 +37,22 @@ pontuacao = 0
 
 def tecladoMovimentos(tecla, x, y):
     global jogoExecucao
+    global anguloX, anguloY
 
     if (jogoExecucao):
         movimenta(1)
+
+    if (tecla == b'w' or tecla == b'W'):
+        anguloY -= 1
+    elif (tecla == b's' or tecla == b'S'):
+        anguloY += 1
+    elif (tecla == b'a' or tecla == b'A'):
+        anguloX -= 1
+    elif (tecla == b'd' or tecla == b'D'):
+        anguloX += 1
+
+    parametrosVisualizacao()
+    glutPostRedisplay()
 
 def tecladoMovimentosTeclasEspeciais(tecla, x, y):
     global cobrinha_direcao
@@ -243,6 +257,7 @@ def desenhaCorpo(x, y, largura, altura):
     glPopMatrix()
 
 def desenha():
+    global anguloX, anguloY
     global comida, veneno, super_comida
     global jogoIniciado, jogoEncerrado, jogoExecucao, envenenado, desenha_veneno
 
@@ -251,6 +266,9 @@ def desenha():
     resetaMapa(largura, altura, widthMapa, heightMapa)
 
     parametrosVisualizacao()
+
+    glRotated(anguloX, 0.0, 1.0, 0.0);
+    glRotated(anguloY, 1.0, 0.0, 0.0);
     #Especifica sistema de coordenadas de projeção
     # if jogoIniciado == False:
     #   glMatrixMode(GL_PROJECTION);
@@ -421,9 +439,9 @@ def gerenciaMouse(button, state, x, y):
                 angulo += 5
             else:
                 angulo = 5
-    #printf("%f\n",angulo);
-    parametrosVisualizacao();
-    glutPostRedisplay();
+
+    parametrosVisualizacao()
+    glutPostRedisplay()
 
 def main():
     print("Jogo da Cobrinha")
