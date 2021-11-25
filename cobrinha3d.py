@@ -341,46 +341,33 @@ def desenhaTexto(string, x, y):
 
 def iluminacao():
     luzAmbiente = [0.2, 0.2, 0.2, 1]
-    luzDifusa = [0.5,0.5,0.5, 1]# "cor"
-    luzEspecular = [0.5, 0.5, 0.5, 1]# "brilho"
-    posicaoLuz = [1,1,1,1]#{ 50.0, 100.0, 20.0, 1.0 }
-    # Capacidade de brilho do material
+    luzDifusa = [0.5,0.5,0.5, 1]
+    luzEspecular = [0.5, 0.5, 0.5, 1]
+    posicaoLuz = [1,1,1,1]
     especularidade = [0.4, 0.4, 0.4, 0.4]
     especMaterial = 50
     glClearColor(0.0, 0.0, 0.0, 1.0)
-    # Habilita o modelo de colorização de Gouraud
     glShadeModel(GL_SMOOTH)
-    # Define a refletância do material
     glMaterialfv(GL_FRONT, GL_SPECULAR, especularidade)
-    #// Define a concentração do brilho
     glMateriali(GL_FRONT, GL_SHININESS, especMaterial)
-    # Ativa o uso da luz ambiente
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente)
-    # Define os parâmetros da luz de número 0
     glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente)
     glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa)
     glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular)
     glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz)
-    # Habilita a definição da cor do material a partir da cor corrente
     glEnable(GL_COLOR_MATERIAL)
-    glEnable(GL_LIGHTING)#Habilita o uso de iluminação
-    glEnable(GL_LIGHT0) # Habilita a luz de número 0
-    glEnable(GL_DEPTH_TEST) # Habilita o depth-buffering
+    glEnable(GL_LIGHTING)
+    glEnable(GL_LIGHT0)
+    glEnable(GL_DEPTH_TEST)
     glEnable(GL_NORMALIZE)
 
 def parametrosVisualizacao():
     global angulo
-
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    # Especifica a projeção perspectiva
     gluPerspective(angulo, 1, 0.1, 600)
-    #gluPerspective(angulo, 1, 0.5, 50)
-    #glOrtho(-1.8, 1.8, -1.8, 2, 0.8, 200.0)
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
-    # Especifica posição do observador e do alvo
-    #gluLookAt(2.00 + anguloX, 1.00 + anguloY, 2.0, 0.0, 0.5, 0.25, 0.0, 1.0, 0.0)
     gluLookAt(0, 300, 500, 50, 150, 150, 0, 1, 0)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
