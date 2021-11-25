@@ -284,15 +284,15 @@ def desenha():
     else:
         if envenenado:
             gameOver()
-            desenhaTexto("Game Over - Você comeu a comida envenenada", 1, 30)
+            desenhaTexto("Game Over - Você comeu a comida envenenada", 5, 30)
             desenhaTexto("Pontuação: " + str(pontuacao), 17, 25)
             desenhaTexto("Clique com botão direito para abrir menu", 5.5, 20)
 
         elif jogoEncerrado:
             gameOver()
-            desenhaTexto("Game Over", 17, 30)
-            desenhaTexto("Pontuação: " + str(pontuacao), 17, 25)
-            desenhaTexto("Clique com botão direito para abrir menu", 5.5, 20)
+            desenhaTexto("Game Over", 20, 65)
+            desenhaTexto("Pontuação: " + str(pontuacao), 20, 45)
+            desenhaTexto("Clique com botão direito para abrir menu", 5.5, 30)
 
     glFlush()
 
