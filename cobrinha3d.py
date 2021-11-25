@@ -267,24 +267,8 @@ def desenha():
 
     parametrosVisualizacao()
 
-    glRotated(anguloX, 0.0, 1.0, 0.0);
-    glRotated(anguloY, 1.0, 0.0, 0.0);
-    #Especifica sistema de coordenadas de projeção
-    # if jogoIniciado == False:
-    #   glMatrixMode(GL_PROJECTION);
-    #   glLoadIdentity();
-    #   #Especifica a projeção perspectiva
-    #   gluPerspective(45, 1.1, 0.1, 600);
-    #   #Especifica sistema de coordenadas do modelo
-    #   glMatrixMode(GL_MODELVIEW);
-    #   # Inicializa sistema de coordenadas do modelo
-    #   glLoadIdentity();
-    #   #Especifica posição do observador e do alvo
-    #   # gluLookAt(0,80,200, 0,0,0, 0,1,0)
-    #   # gluLookAt(250, 250, 250, 250, 250, 250, 1, 1, 0)
-    #   # gluLookAt(0, 500, 400, 0, 0, 0, 0, 1, 0)
-    #   gluLookAt(0, 300, 500, 0, 150, 100, 0, 1, 0)
-    #   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glRotated(anguloX, 0.0, 1.0, 0.0)
+    glRotated(anguloY, 1.0, 0.0, 0.0)
 
     desenhaVeneno()
     desenhaComidas()
@@ -293,8 +277,9 @@ def desenha():
 
 
     if not jogoIniciado:
-        desenhaTexto("Pressione o botão direito para acessar", 5, 30)
-        desenhaTexto("o menu e então iniciar o jogo", 12, 27)
+        desenhaTexto("Pressione o botão direito para acessar", 5, 35)
+        desenhaTexto("o menu e então iniciar o jogo", 12, 22)
+        iluminacao()
 
     else:
         if envenenado:
@@ -312,8 +297,6 @@ def desenha():
     glFlush()
 
 def criaMenu():
-    # iluminacao()
-
     menu = glutCreateMenu(MenuPrincipal)
     glutAddMenuEntry("Iniciar Jogo", 0)
     glutAddMenuEntry("Reiniciar Jogo", 1)
@@ -358,74 +341,48 @@ def desenhaTexto(string, x, y):
 
 def iluminacao():
     luzAmbiente = [0.2, 0.2, 0.2, 1]
-    luzDifusa = [0.5,0.5,0.5, 1];# "cor"
-    luzEspecular = [0.5, 0.5, 0.5, 1];# "brilho"
-    posicaoLuz = [0,0,1,0];
-    luzAmbiente1 = [0.2, 0.2, 0.2, 1]
-    luzDifusa1 = [0.5,0.5,0.5, 1];# "cor"
-    luzEspecular1 = [0.5, 0.5, 0.5, 1];# "brilho"
-    posicaoLuz1 = [1,0,0,0];
-    posicaoLuz2 = [0,1,0,0];
-    posicaoLuz3 = [1,1,0,0];
+    luzDifusa = [0.5,0.5,0.5, 1]# "cor"
+    luzEspecular = [0.5, 0.5, 0.5, 1]# "brilho"
+    posicaoLuz = [1,1,1,1]#{ 50.0, 100.0, 20.0, 1.0 }
     # Capacidade de brilho do material
-    especularidade = [0.5, 0.5, 0.5, 0];
-    especMaterial = 5;
-    glClearColor(0.0, 0.0, 0.0, 1.0);
+    especularidade = [0.4, 0.4, 0.4, 0.4]
+    especMaterial = 50
+    glClearColor(0.0, 0.0, 0.0, 1.0)
     # Habilita o modelo de colorização de Gouraud
-    glShadeModel(GL_SMOOTH);
-    #glShadeModel(GL_FLAT);
+    glShadeModel(GL_SMOOTH)
     # Define a refletância do material
-    glMaterialfv(GL_FRONT, GL_SPECULAR, especularidade);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, especularidade)
     #// Define a concentração do brilho
-    glMateriali(GL_FRONT, GL_SHININESS, especMaterial);
+    glMateriali(GL_FRONT, GL_SHININESS, especMaterial)
     # Ativa o uso da luz ambiente
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente);
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente)
     # Define os parâmetros da luz de número 0
-    glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
-    glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
-    # Define os parâmetros da luz de número 1
-    glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbiente1);
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusa1);
-    glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular1);
-    glLightfv(GL_LIGHT1, GL_POSITION, posicaoLuz1);
-    # Define os parâmetros da luz de número 2
-    glLightfv(GL_LIGHT2, GL_AMBIENT, luzAmbiente);
-    glLightfv(GL_LIGHT2, GL_DIFFUSE, luzDifusa);
-    glLightfv(GL_LIGHT2, GL_SPECULAR, luzEspecular);
-    glLightfv(GL_LIGHT2, GL_POSITION, posicaoLuz2);
-    # Define os parâmetros da luz de número 3
-    glLightfv(GL_LIGHT3, GL_AMBIENT, luzAmbiente);
-    glLightfv(GL_LIGHT3, GL_DIFFUSE, luzDifusa);
-    glLightfv(GL_LIGHT3, GL_SPECULAR, luzEspecular);
-    glLightfv(GL_LIGHT3, GL_POSITION, posicaoLuz3);
-
+    glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente)
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa)
+    glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular)
+    glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz)
     # Habilita a definição da cor do material a partir da cor corrente
-    glEnable(GL_COLOR_MATERIAL);
-    glEnable(GL_LIGHTING);#Habilita o uso de iluminação
-#    glEnable(GL_LIGHT0); # Habilita a luz de número 0
-#    glEnable(GL_LIGHT1); # Habilita a luz de número 0
-#    glEnable(GL_LIGHT2); # Habilita a luz de número 0
-#    glEnable(GL_LIGHT3); # Habilita a luz de número 0
-    glEnable(GL_DEPTH_TEST); # Habilita o depth-buffering
-    glEnable(GL_NORMALIZE);
+    glEnable(GL_COLOR_MATERIAL)
+    glEnable(GL_LIGHTING)#Habilita o uso de iluminação
+    glEnable(GL_LIGHT0) # Habilita a luz de número 0
+    glEnable(GL_DEPTH_TEST) # Habilita o depth-buffering
+    glEnable(GL_NORMALIZE)
 
 def parametrosVisualizacao():
     global angulo
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
     # Especifica a projeção perspectiva
-    gluPerspective(angulo, 1, 0.1, 600);
-    #gluPerspective(angulo, 1, 0.5, 50);
-    #glOrtho(-1.8, 1.8, -1.8, 2, 0.8, 200.0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    gluPerspective(angulo, 1, 0.1, 600)
+    #gluPerspective(angulo, 1, 0.5, 50)
+    #glOrtho(-1.8, 1.8, -1.8, 2, 0.8, 200.0)
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity()
     # Especifica posição do observador e do alvo
-    #gluLookAt(2.00 + anguloX, 1.00 + anguloY, 2.0, 0.0, 0.5, 0.25, 0.0, 1.0, 0.0);
+    #gluLookAt(2.00 + anguloX, 1.00 + anguloY, 2.0, 0.0, 0.5, 0.25, 0.0, 1.0, 0.0)
     gluLookAt(0, 300, 500, 0, 150, 100, 0, 1, 0)
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
 def gerenciaMouse(button, state, x, y):
     global angulo
