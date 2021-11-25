@@ -381,7 +381,7 @@ def parametrosVisualizacao():
     glLoadIdentity()
     # Especifica posição do observador e do alvo
     #gluLookAt(2.00 + anguloX, 1.00 + anguloY, 2.0, 0.0, 0.5, 0.25, 0.0, 1.0, 0.0)
-    gluLookAt(0, 300, 500, 0, 150, 100, 0, 1, 0)
+    gluLookAt(0, 300, 500, 50, 150, 150, 0, 1, 0)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
 def gerenciaMouse(button, state, x, y):
